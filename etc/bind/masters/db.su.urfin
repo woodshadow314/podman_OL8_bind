@@ -7,4 +7,4 @@ $TTL	604800
 			 604800 )	; Negative Cache TTL
 ;
 @	            IN	NS	dns.urfin.su.
-dns.urfin.su.	IN	A	192.168.
+dns.urfin.su.	IN	A	192.168.1.64

@@ -3,7 +3,7 @@
 
 ```bash 
 # установка дополнительного ПО
-$sudo yum -y install git telnet bash-completion bind-utils mc
+$sudo yum -y install git telnet bash-completion bind-utils mc tree
 
 # установка sealert
 $sudo yum -y install setroubleshoot-server
