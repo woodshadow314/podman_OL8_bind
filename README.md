@@ -54,10 +54,10 @@ $podman run \
         --restart=always \
         --publish 53:53/udp \
         --publish 53:53/tcp \
-        --volume ~/BIND9/etc/bind/named.conf:/etc/bind/named.conf \
+        --volume ~/BIND9/etc/bind:/etc/bind \
         --volume /var/cache/bind \
         --volume /var/lib/bind \
-        --volume /var/log \
+        --volume ~/BIND9/var/log:/var/log \
         docker.io/internetsystemsconsortium/bind9:9.16
 
 
