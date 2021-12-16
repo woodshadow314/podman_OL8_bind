@@ -50,7 +50,7 @@ $podman run \
         docker.io/internetsystemsconsortium/bind9:9.16
 
 $podman run \
-        --name=bind9.16 \
+        --name=bind_9.16 \
         --restart=always \
         --publish 53:53/udp \
         --publish 53:53/tcp \
