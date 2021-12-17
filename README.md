@@ -3,7 +3,7 @@
 
 ```bash 
 # установка дополнительного ПО
-$sudo yum -y install git telnet bash-completion bind-utils mc tree htop
+$sudo yum -y install git telnet bash-completion bind-utils mc tree htop vim
 
 # установка Podman & Co. 
 $sudo dnf module install container-tools:ol8
