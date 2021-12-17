@@ -36,7 +36,7 @@ $sudo semanage fcontext -l | grep .local/share/containers/storage/volumes
 /home/[^/]+/\.local/share/containers/storage/volumes/[^/]*/.* all files          unconfined_u:object_r:container_file_t:s0
 # создание политики задания контекста SELinux
 $sudo semanage fcontext -a -s unconfined_u -t container_file_t '/home/adminos/BIND9/etc/bind(/.*)?'
-$sudo semanage fcontext -a -s unconfined_u -t container_file_t '/home/adminos/BIND9/var/log(/.*)?'
+$sudo semanage fcontext -a -s unconfined_u -t container_file_t '/home/adminos/BIND9/var(/.*)?'
 # проверка успешности создания политики
 $sudo semanage fcontext -l | grep container_file_t
 # применение контекста из политики к  ~/BIND9/
@@ -81,7 +81,7 @@ $podman run \
         --publish 53:53/udp \
         --publish 53:53/tcp \
         --volume ~/BIND9/etc/bind:/etc/bind \
-        --volume /var/cache/bind \
+        --volume ~/BIND9/var/cache/bind:/var/cache/bind \
         --volume /var/lib/bind \
         --volume ~/BIND9/var/log:/var/log \
         docker.io/internetsystemsconsortium/bind9:9.16
