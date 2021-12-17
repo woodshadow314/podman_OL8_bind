@@ -3,10 +3,7 @@
 
 ```bash 
 # установка дополнительного ПО
-$sudo yum -y install git telnet bash-completion bind-utils mc tree
-
-# установка sealert
-$sudo yum -y install setroubleshoot-server
+$sudo yum -y install git telnet bash-completion bind-utils mc tree htop
 
 # установка Podman & Co. 
 $sudo dnf module install container-tools:ol8
@@ -19,6 +16,31 @@ $sudo yum -y install podman
 echo 'net.ipv4.ip_unprivileged_port_start=0' > /etc/sysctl.d/50-unprivileged-ports.conf
 #apply conf
 $sudo sysctl --system
+```
+## Настройки безопасности
+```bash 
+# установка sealert
+$sudo yum -y install setroubleshoot-server
+# просмотр предупреждений selinux
+$sudo audit2why < /var/log/audit/audit.log
+#Вывод анализа причины блокировки SELinux-ом доступа к ресурсу
+$sudo sealert -a /var/log/audit/audit.log
+
+# временная смена selinux контекста каталога
+chcon -R -t container_file_t ~/BIND9
+# возврат контекста к default
+restorecon -R -F -v BIND9/
+
+# поиск политики задания контекста SELinux заданного для каталога, где Podman хранит тома контейнеров - это "container_file_t"
+$sudo semanage fcontext -l | grep .local/share/containers/storage/volumes
+/home/[^/]+/\.local/share/containers/storage/volumes/[^/]*/.* all files          unconfined_u:object_r:container_file_t:s0
+# создание политики задания контекста SELinux
+sudo semanage fcontext -a -t container_file_t ~/BIND9/etc/bind/[^/]*/.*
+sudo semanage fcontext -a -t container_file_t ~/BIND9/var/log/[^/]*/.*
+# проверка успешности создания политики
+$sudo semanage fcontext -l | grep container_file_t
+# применение контекста из политики к  ~/BIND9/
+restorecon -R -F -v ~/BIND9/
 
 #Firewalld settings
 $sudo firewall-cmd --add-service=dns  --permanent
@@ -36,6 +58,10 @@ $sudo firewall-cmd --list-all
 ```bash
 # загрузка контейнера bind9:9.16 из репозитория
 $podman pull docker.io/internetsystemsconsortium/bind9:9.16
+$mkdir ~/BIND9
+$git clone https://github.com/woodshadow314/podman_OL8_bind ~/BIND9/
+$tree ~/BIND9/
+
 
 $podman run \
         --name=bind9.16 \
@@ -66,16 +92,16 @@ $podman run \
 ## Тестирование состояния BIND9
 ```bash
 #temporary installation of additional software for configuration and testing
-$podman exec -it bind9.16 /usr/bin/apt install dnsutils
+$podman exec -it bind_9.16 /usr/bin/apt install dnsutils
 
 #проверка доступности внешних DNS серверов
-podman exec -it bind9.16 nslookup ya.ru
+podman exec -it bind_9.16 nslookup ya.ru
 
 #Вывод содержимого примененной конфигурации
 #$sudo /usr/sbin/named-checkconf -p -t /chroot/bind/
-/usr/sbin/named-checkconf -p
+podman exec -it bind_9.16 /usr/sbin/named-checkconf -p
 
 #вывод загруженных зон - краткий формат
 #$sudo /usr/sbin/named-checkconf -z -t /chroot/bind/
-/usr/sbin/named-checkconf -z
+podman exec -it bind_9.16 /usr/sbin/named-checkconf -z
 ```

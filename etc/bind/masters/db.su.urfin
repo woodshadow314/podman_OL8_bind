@@ -11,3 +11,4 @@ $TTL 86400
 @	            IN	NS	dns.urfin.su.
 
 dns2.urfin.su.	IN	A	192.168.1.64
+dns.urfin.su.	IN	A	192.168.1.64
