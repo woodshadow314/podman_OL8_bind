@@ -31,7 +31,7 @@ chcon -R -t container_file_t -u unconfined_u ~/BIND9
 # возврат контекста к определенному политиками
 restorecon -R -F -v BIND9/
 
-# поиск политики задания контекста SELinux заданного для каталога, где Podman хранит тома контейнеров - это "container_file_t"
+# поиск политики назначения контекста SELinux заданного для каталога, где Podman хранит тома контейнеров - это "container_file_t"
 $sudo semanage fcontext -l | grep .local/share/containers/storage/volumes
 /home/[^/]+/\.local/share/containers/storage/volumes/[^/]*/.* all files          unconfined_u:object_r:container_file_t:s0
 # создание политики задания контекста SELinux

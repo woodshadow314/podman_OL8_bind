@@ -14,15 +14,15 @@ zone "localhost" {
 
 zone "127.in-addr.arpa" {
 	type master;
-	file "/etc/bind/default-zones/bind/db.127";
+	file "/etc/bind/default-zones/db.127";
 };
 
 zone "0.in-addr.arpa" {
 	type master;
-	file "/etc/bind/default-zones/bind/db.0";
+	file "/etc/bind/default-zones/db.0";
 };
 
 zone "255.in-addr.arpa" {
 	type master;
-	file "/etc/bind/default-zones/bind/db.255";
+	file "/etc/bind/default-zones/db.255";
 };
