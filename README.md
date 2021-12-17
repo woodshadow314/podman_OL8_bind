@@ -75,15 +75,19 @@ $podman run \
         --volume /var/log \
         docker.io/internetsystemsconsortium/bind9:9.16
 
-$podman run \
+podman stop -li
+podman rm -l
+podman volume rm --all
+rm -rfv ~/BIND9/* ~/BIND9/.git/
+git clone  https://github.com/woodshadow314/podman_OL8_bind ./
+restorecon -R -F -v ~/BIND9/
+
+podman run \
         --name=bind_9.16 \
         --restart=always \
         --publish 53:53/udp \
         --publish 53:53/tcp \
-        --volume ~/BIND9/etc/bind:/etc/bind \
-        --volume ~/BIND9/var/cache/bind:/var/cache/bind \
-        --volume /var/lib/bind \
-        --volume ~/BIND9/var/log:/var/log \
+        --volume ~/BIND9/etc/bind:/etc/bind:z \
         docker.io/internetsystemsconsortium/bind9:9.16
 
 
