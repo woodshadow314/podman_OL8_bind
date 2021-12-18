@@ -1,5 +1,5 @@
 $TTL 86400
-@		IN	SOA	ns2.urfin.su.	root.urfin.su.	(
+@		IN	SOA	dns2.urfin.su.	root.urfin.su.	(
 
 			2006122700	; Serial
 			10800		; Refresh
@@ -10,5 +10,10 @@ $TTL 86400
 @	            IN	NS	dns2.urfin.su.
 @	            IN	NS	dns.urfin.su.
 
-dns2.urfin.su.	IN	A	192.168.1.64
-dns.urfin.su.	IN	A	192.168.1.64
+dns.urfin.su.	IN	A	192.168.1.5
+dns2.urfin.su.	IN	A	192.168.1.6
+
+infr			IN	A	192.168.1.5
+infr			IN	A	192.168.1.6
+
+ansible			IN	A	192.168.1.11

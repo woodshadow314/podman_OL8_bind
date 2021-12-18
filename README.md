@@ -64,7 +64,7 @@ $tree ~/BIND9/
 
 
 $podman run \
-        --name=bind9.16 \
+        --name=bind_9.16 \
         --restart=always \
         --publish 53:53/udp \
         --publish 53:53/tcp \
@@ -84,10 +84,11 @@ restorecon -R -F -v ~/BIND9/
 
 podman run \
         --name=bind_9.16 \
+        --hostname=dns2.urfin.su \
         --restart=always \
         --publish 53:53/udp \
         --publish 53:53/tcp \
-        --volume ~/BIND9/etc/bind:/etc/bind:z \
+        --volume ~/BIND9/etc/bind:/etc/bind:z,ro \
         docker.io/internetsystemsconsortium/bind9:9.16
 
 
