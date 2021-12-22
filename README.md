@@ -3,6 +3,7 @@
 
 ```bash 
 # установка дополнительного ПО
+$sudo yum -y install epel-release
 $sudo yum -y install git telnet bash-completion bind-utils mc tree htop vim
 
 # установка Podman & Co. 
